@@ -8,12 +8,12 @@ function Navbar() {
 
                 <ul className="flex space-x-6">
                     <li>
-                        <a href="" className="text-white hover:text-gray-400">
+                        <a href="/" className="text-white hover:text-gray-400">
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="#" className="text-white hover:text-gray-400">
+                        <a href="/flight" className="text-white hover:text-gray-400">
                             Flights
                         </a>
                     </li>

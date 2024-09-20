@@ -1,3 +1,4 @@
+// This data will be fetched from the database in the future
 const cityOptions = [
     { value: '', label: 'Select a city' },
     { value: 'istanbul', label: 'Istanbul' },

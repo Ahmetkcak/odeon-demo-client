@@ -20,7 +20,7 @@ const routes = createBrowserRouter([
     },
     {
         path: '*',
-        element: <Layout><NotFound /></Layout>
+        element: <NotFound />
     }
 ])
 
