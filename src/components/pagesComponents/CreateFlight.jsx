@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import Button from '@/components/baseComponents/Button';
 import DateTimePicker from '@/components/baseComponents/Datepicker';
-import Input from '@/components/baseComponents/Input';
 import Select from '@/components/baseComponents/Select';
 import cityOptions from '@/mock/cityOptions';
+import { createFlight } from '@/api/flight';
+import { toast } from 'react-toastify';
 
 function CreateFlight() {
-
     const [formData, setFormData] = useState({
         departureLocation: '',
         arrivalLocation: '',
         departureDate: '',
         arrivalDate: '',
     });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,9 +24,25 @@ function CreateFlight() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('New Flight Created:', formData);
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await createFlight(formData);
+            if (response.status === 400 || response.status === 403) {
+                toast.error(response.response.data.detail);
+            }
+            else {
+                toast.success("New Flight Created");
+            }
+        } catch (err) {
+            setError('Error creating flight: ' + (err.response ? err.response.data.message : err.message));
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -61,7 +79,8 @@ function CreateFlight() {
                     onChange={handleChange}
                 />
 
-                <Button label="Create Flight" type="submit" width="100%" />
+                {error && <div className="text-red-500">{error}</div>}
+                <Button label={loading ? "Creating..." : "Create Flight"} type="submit" width="100%" disabled={loading} />
             </form>
         </div>
     );

@@ -4,12 +4,15 @@ import Input from '@/components/baseComponents/Input';
 import Select from '@/components/baseComponents/Select';
 import cityOptions from '@/mock/cityOptions';
 import { useState } from 'react';
+import { registerUser } from '@/api/user';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 function Register() {
 
 
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -28,7 +31,9 @@ function Register() {
     };
 
     const handleSubmit = () => {
-        console.log('Form Submitted:', formData);
+        registerUser(formData)
+        navigate("/auth/login")
+        toast.success("Registered Successfuly");
     };
 
     return (

@@ -68,6 +68,17 @@ function Login() {
                 width="100%"
                 disabled={loading}
             />
+
+            <p className="text-center mt-4">
+                Don&apos;t have an account?{' '}
+                <a
+                    href="/auth/register"
+                    className="text-blue-500 underline hover:text-blue-700"
+                >
+                    Create one
+                </a>
+            </p>
+
         </div>
     );
 }
