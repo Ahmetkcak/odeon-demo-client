@@ -30,10 +30,19 @@ function Register() {
         });
     };
 
-    const handleSubmit = () => {
-        registerUser(formData)
-        navigate("/auth/login")
-        toast.success("Registered Successfuly");
+    const handleSubmit = async () => {
+        try {
+            const response = await registerUser(formData)
+            if (response.status === 400 || response.status === 403) {
+                toast.error(response.response.data.detail);
+            }
+            else {
+                navigate("/auth/login")
+                toast.success("Registered Successfuly");
+            }
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
@@ -93,6 +102,16 @@ function Register() {
             />
 
             <Button label="Register" onClick={handleSubmit} width="100%" />
+            <p className="text-center mt-4">
+                Already have an account?{' '}
+                <a
+                    href="/auth/login"
+                    className="text-blue-500 underline hover:text-blue-700"
+                >
+                    Sign in
+                </a>
+            </p>
+
         </div>
     );
 }

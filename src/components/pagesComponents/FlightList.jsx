@@ -10,7 +10,10 @@ function FlightList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const { id: userId, city } = getUserInfo();
+    const userInfo = getUserInfo();
+    const userId = userInfo?.id ?? null;
+    const city = userInfo?.city ?? null;
+
 
     useEffect(() => {
         const fetchFlights = async () => {

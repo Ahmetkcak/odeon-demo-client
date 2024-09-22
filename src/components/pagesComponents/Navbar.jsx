@@ -1,16 +1,20 @@
+import { isAccessTokenStored } from "@/hooks/isAccessTokenStored";
 import Button from "../baseComponents/Button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Navbar() {
 
     const navigate = useNavigate();
+    const location = useLocation();
+
     const handleLogout = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("user_info");
-
         navigate("/auth/login");
     }
+
+    const isLoggin = isAccessTokenStored();
 
     return (
         <nav className="bg-gradient-to-r from-gray-800 to-black p-4 shadow-md">
@@ -41,8 +45,13 @@ function Navbar() {
                         </a>
                     </li>
                     <li>
-                        <Button label="Log Out" onClick={handleLogout} />
+                        {!isLoggin && location.pathname !== "/auth/login" ? (
+                            <Button label="Login" onClick={() => navigate("/auth/login")} />
+                        ) : (
+                            isLoggin && <Button label="Log Out" onClick={handleLogout} />
+                        )}
                     </li>
+
                 </ul>
             </div>
         </nav>
